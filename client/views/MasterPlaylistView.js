@@ -13,8 +13,9 @@ var MasterPlaylistView = Backbone.View.extend({
 
 	events: {
 		'click .submitPlaylist': function() {
-			if (this.$el.find('.playlistName').val().length > 0) {
-
+			var playlistName = this.$el.find('.playlistName').val()
+			if (playlistName.length > 0) {
+				this.createPlaylist(playlistName);
 			}
 		}
 	},
@@ -27,9 +28,19 @@ var MasterPlaylistView = Backbone.View.extend({
 		);
 	},
 
-	createPlaylist: function() {
-		var newPlaylist = new Playlist();
-		this.$el.append(new PlaylistView({collection: newPlaylist}).render());
+	createPlaylist: function(playlistName) {
+		var found = false;
+		this.collection.each(function(playlist) {  
+			if (playlistName === playlist.get('name')) {
+				found = true;
+			}
+		});
+		if (!found) {		
+			var newPlaylist = new PlaylistModel(playlistName);
+			this.collection.add(newPlaylist);
+			var playlistView = new PlaylistView({model: newPlaylist});
+			this.$el.append(playlistView.render());
+		}
 	}
 
 })

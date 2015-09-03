@@ -5,7 +5,6 @@ var AppModel = Backbone.Model.extend({
   initialize: function(params) {
 
     this.set('currentSong', new SongModel());
-    console.log(this.get('currentSong'))
     this.set('songQueue', new SongQueue());
     this.set('playlists', new Playlists());
     this.set('queueList', 0);

@@ -4,6 +4,11 @@ var SongQueue = Songs.extend({
 	//listens for queue event to fire from song model
   initialize: function() {
   	// this.on('enqueue', this.add(this.model), this);
+
+  },
+
+  playFirst: function() {
+  	this.models[0].play();
   }
 
 });

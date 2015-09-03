@@ -1,0 +1,3 @@
+var Playlist = Songs.extend({
+
+})

@@ -9,7 +9,8 @@ var LibraryEntryView = Backbone.View.extend({
 
     //plays and queues on click
     'click': function() {
-      this.model.play();
+      //So we can simplify what is going on with the queues only queued play is possible now
+      // this.model.play();
       this.model.enqueue();
     }
   },

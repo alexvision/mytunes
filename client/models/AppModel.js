@@ -1,6 +1,7 @@
 // App.js - Defines a backbone model class for the whole app.
 var AppModel = Backbone.Model.extend({
 
+
   initialize: function(params) {
     this.set('currentSong', new SongModel());
     this.set('songQueue', new SongQueue());
@@ -17,12 +18,18 @@ var AppModel = Backbone.Model.extend({
       this.set('currentSong', song);
     }, this),
 
+    //console.log(params)
     //Add to the queue
-    params.library.on('queued', function(song) {
+    params.library.on('enqueue', function(song) {
       this.get('songQueue').add(song);
-      console.log(this.get('songQueue'));
 
     }, this)
+
+    //Remove from the queue
+    params.library.on('dequeue', function(song){
+      this.get('songQueue').remove(song);
+      console.log(this.get('songQueue'));
+    })
   }
 
 });

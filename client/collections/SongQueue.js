@@ -8,7 +8,9 @@ var SongQueue = Songs.extend({
   },
 
   playFirst: function() {
-  	this.models[0].play();
+  	if (this.length > 0) {
+		this.models[0].play();
+	}
   }
 
 });

@@ -3,10 +3,19 @@ var PlaylistView = Backbone.View.extend({
   tagName: "table",
   className: "playlist",
 
-  template: _.template('<th><%- name %></th><td><button class="enqueue">Play</button></td>'),
+  template: _.template('<th class="plHeader"><%- name %></th><td><button class="enqueue">Play</button></td>'),
 
   initialize: function() {
   	this.render();
+  	this.model.on('chosen', this.choose, this);
+  	this.model.on('', this.render, this);
+  },
+
+  events: {
+  	'click .plHeader': function() {
+  		console.log(this.model);
+  		this.model.chosen();
+  	}
   },
 
   render: function() {
@@ -14,12 +23,21 @@ var PlaylistView = Backbone.View.extend({
     // see http://api.jquery.com/detach/
     this.$el.children().detach();
     var name = this.model.get("name");
-    return this.$el.html(this.template(this.model.attributes))
-    // .append(
-    //   this.collection.map(function(song) {
-    //     return new PlaylistEntryView({model: song}).render();
-    //   })
-    // );
-  } 
+        console.log('rendering');
+
+    return this.$el.html(this.template(this.model.attributes)).append(
+ 		this.model.get('collection').map(function(song) {
+        return new PlaylistEntryView({model: song}).render();
+      })
+    );
+  },
+
+  choose: function() {
+  	this.$el.toggleClass('selected')
+  },
+
+  deselectSelf: function() {
+  	this.$el.removeClass('selected');
+  }
 
 });

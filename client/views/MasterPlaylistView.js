@@ -9,10 +9,12 @@ var MasterPlaylistView = Backbone.View.extend({
 
 	initialize: function(){
 		this.render();
+		//this.options.models.on('chosen', this.deselectChildren, this)
 	},
 
 	events: {
 		'click .submitPlaylist': function() {
+			console.log(this);
 			var playlistName = this.$el.find('.playlistName').val()
 			if (playlistName.length > 0) {
 				this.createPlaylist(playlistName);
@@ -41,6 +43,13 @@ var MasterPlaylistView = Backbone.View.extend({
 			var playlistView = new PlaylistView({model: newPlaylist});
 			this.$el.append(playlistView.render());
 		}
+	},
+
+	deselectChildren: function() {
+		console.log('deselecting');
+		this.$el.find('.plHeader').each(function(child){
+			child.deselectSelf();
+		})
 	}
 
 })

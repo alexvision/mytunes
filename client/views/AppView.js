@@ -4,7 +4,7 @@ var AppView = Backbone.View.extend({
   template: _.template('<div class="track-info"><%= artist %> - <%= title %></div>'),
 
   initialize: function(params) {
-    this.playerView = new PlayerView({model: this.model.get('currentSong')});
+    this.playerView = this.playerView || new PlayerView({model: this.model.get('currentSong')});
     this.libraryView = new LibraryView({collection: this.model.get('library')});
     this.queueView = new SongQueueView({collection: this.model.get('songQueue')});
     this.masterPlaylistView = new MasterPlaylistView({collection: this.model.get('playlists')})

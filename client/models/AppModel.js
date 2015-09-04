@@ -46,6 +46,16 @@ var AppModel = Backbone.Model.extend({
       this.set('queueList', this.get('queueList') - 1);
     }, this);
 
+    params.library.on('addMe', function(song) {
+      var lists = this.get('playlists');
+
+      lists.each(function(playlist){
+        if(playlist.get('chosen') === true){
+          playlist.collection.add(song);
+        }
+      })
+    }, this)
+
   }
 
 });
